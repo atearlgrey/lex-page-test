@@ -1,0 +1,37 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build / output
+dist/
+build/
+coverage/
+
+# Cypress artifacts
+cypress/videos/
+cypress/screenshots/
+cypress/downloads/
+
+# Cypress env file (often contains secrets) and local env files
+cypress.env.json
+
+# Ignore all env files by default, but explicitly do NOT ignore .env.base and .env.template
+.env*
+!.env.base
+!.env.template
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Misc
+.cache/
+.nyc_output/
+/.parcel-cache/
