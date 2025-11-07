@@ -1,4 +1,10 @@
 describe('LexGPT Ask Questions', () => {
+  beforeEach(() => {
+    cy.session('lexgpt-session', () => {
+      cy.loginLexcentra(); // hàm tự định nghĩa ở trên
+    });
+  });
+  
   before(() => {
     cy.fixture('questions.json').then((data) => {
       cy.wrap(data).as('questions');

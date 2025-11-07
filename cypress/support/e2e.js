@@ -7,7 +7,7 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 });
 
 beforeEach(() => {
-  cy.session('lexgpt-session', () => {
-    cy.loginLexcentra(); // hàm tự định nghĩa ở trên
-  });
+  // cy.session('lexgpt-session', () => {
+  //   cy.loginLexcentra(); // hàm tự định nghĩa ở trên
+  // });
 });
