@@ -17,7 +17,7 @@ describe('LexGPT Ask Questions', () => {
       cy.log(`⚙️ Start Question ${i + 1}: ${question}`);
 
       // Open new conversation page
-      cy.visit(Cypress.env('LEXGPT_PATH'));
+      cy.visit(Cypress.env('URL_LEXGPT_NEW_CONVERSATION'));
 
       cy.get('#customTextarea')
         .should('be.visible')

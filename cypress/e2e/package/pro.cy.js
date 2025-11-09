@@ -1,14 +1,14 @@
 import { useLexGPT, useFindJudgementInLexGPT, useFindJudgement, useDraftDocument, useReviewDocument } from '@featureCommand';
 import { featureMatrix, canUseFeature } from './featureMatrix';
 
-const packageType = 'enterprise';
+const packageType = 'pro';
 
-describe('Enterprise Package', () => {
+describe('Pro Package', () => {
   beforeEach(() => {
     cy.session('lexgpt-session', () => {
       cy.loginSpecialUserLexcentra(
-        Cypress.env('PACKAGE_ENTERPRISE_USERNAME'),
-        Cypress.env('PACKAGE_ENTERPRISE_PASSWORD')
+        Cypress.env('PACKAGE_PRO_USERNAME'),
+        Cypress.env('PACKAGE_PRO_PASSWORD')
       );
     });
   });
