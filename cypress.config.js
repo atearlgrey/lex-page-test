@@ -1,6 +1,8 @@
 const { defineConfig } = require('cypress');
 const fs = require('fs');
 const dotenv = require('dotenv');
+const webpack = require('@cypress/webpack-preprocessor');
+const webpackConfig = require('./webpack.config');
 
 function loadEnv() {
   // 1. Load base (luôn có)
@@ -26,6 +28,12 @@ module.exports = defineConfig({
     viewportWidth: 1280,
     viewportHeight: 800,
     video: false,
-    chromeWebSecurity: false
+    chromeWebSecurity: false,
+    experimentalMemoryManagement: true,
+    numTestsKeptInMemory: 0,
+    setupNodeEvents(on, config) {
+      on('file:preprocessor', webpack({ webpackOptions: webpackConfig }));
+      return config;
+    },
   }
 });
