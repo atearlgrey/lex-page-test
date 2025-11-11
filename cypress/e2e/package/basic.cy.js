@@ -41,7 +41,7 @@ describe('Basic Package', () => {
     useFindJudgement(canUseFeature(packageType, featureKey));
   });
 
-  it.only(`user uses ${packageType} package can not using find judgement advance`, () => {
+  it(`user uses ${packageType} package can not using find judgement advance`, () => {
     const featureKey = 'findJudgement';
     useFindJudgementAdvance(canUseFeature(packageType, featureKey), false);
   });

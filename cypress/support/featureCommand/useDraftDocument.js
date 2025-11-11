@@ -1,9 +1,8 @@
-const urlDraftContract = Cypress.env('URL_DRAFT_CONTRACT') || '/assistant/document-drafting';
-const apiDraftingContract = Cypress.env('API_DRAFTING_CONTRACT') || '**/api/drafting/v1.0/contract';
-const timeoutDraftContract = Number(Cypress.env('TIMEOUT_DRAFT_CONTRACT')) || 600000;
+const urlDraftContract = Cypress.env('DRAFT_CONTRACT_URL') || '/assistant/document-drafting';
+const timeoutDraftContract = Number(Cypress.env('DRAFT_CONTRACT_TIMEOUT')) || 600000;
 
 export function useDraftDocument(canUse) {
-  cy.visit(Cypress.env('URL_LEXGPT_NEW_CONVERSATION'));
+  cy.visitNewConversation();
   // 1️⃣ Mở tab Soạn thảo
   cy.contains('span', 'Soạn thảo')
     .should('be.visible')
@@ -57,14 +56,14 @@ export function useDraftDocument(canUse) {
     cy.contains('h4', 'Dàn ý phác thảo', { timeout: timeoutDraftContract }) // đợi header hiển thị
       .should('be.visible');
 
-    cy.intercept('POST', apiDraftingContract).as('draftContract');
+    cy.proxyDraftingContract();
 
     // Khi thấy rồi -> click "Duyệt dàn ý"
     cy.contains('button', 'Duyệt dàn ý')
       .should('be.visible')
       .click();
       
-    cy.wait('@draftContract', { timeout: timeoutDraftContract }).then((interception) => {
+    cy.wait('@proxyDraftingContract', { timeout: timeoutDraftContract }).then((interception) => {
       expect(interception.response.statusCode).to.eq(200);
       cy.log('✅ API drafting contract returned 200');
     });

@@ -1,6 +1,6 @@
 describe('Login Page', () => {
   beforeEach(() => {
-    cy.visit(Cypress.env('LEXAUTH_PATH'));
+    cy.visitAuthPage();
   });
 
   it('should display the login form', () => {

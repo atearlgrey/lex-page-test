@@ -12,7 +12,7 @@ describe('User Info Page', () => {
   });
 
   it('should display user information correctly', () => {
-    cy.visit(Cypress.env('URL_USER_INFO') || '/profile');
+    cy.visitUserInfoPage();
     cy.get('div#new_user div.profile-tab-new').within(() => {
       cy.get('div').eq(0).within(() => {
         cy.get('span').should('contain.text', Cypress.env('USER_GOOGLE_INFO_NAME')).and('not.be.empty');
@@ -42,7 +42,7 @@ describe('User Info Page', () => {
   });
 
   it('should display package information correctly', () => {
-    cy.visit(Cypress.env('URL_USER_PACK') || '/profile/pack');
+    cy.visitUserPackPage();
     cy.get('div#profile-pack').within(() => {
       cy.get('.status-point')
         .closest('.d-flex').within(() => {
@@ -56,7 +56,7 @@ describe('User Info Page', () => {
   });
 
   it('should display button to buy new package', () => {
-    cy.visit(Cypress.env('URL_USER_PACK') || '/profile/pack');
+    cy.visitUserPackPage();
 
     cy.get('div#profile-pack').within(() => {
       cy.contains('button', 'Mua gói mới').should('be.visible');
@@ -64,7 +64,7 @@ describe('User Info Page', () => {
   });
 
   it('should display histoy package correctly', () => {
-    cy.visit(Cypress.env('URL_USER_PACK') || '/profile/pack');
+    cy.visitUserPackPage();
     cy.get('.manager_table tbody tr', { timeout: 10000 }).should('have.length.at.least', 1);
   });
 });

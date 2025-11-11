@@ -13,7 +13,7 @@ Cypress.Commands.add('loginWithMockGoogle', () => {
 
 Cypress.Commands.add('loginLexcentra', () => {
   // Go to login page
-  cy.visit(Cypress.env('LEXAUTH_PATH'));
+  cy.visitAuthPage();
 
   // Fill in email and password
   cy.get('input[placeholder="Nhập email"]').should('be.visible').type(Cypress.env('LOGIN_EMAIL'), { log: false });
@@ -28,7 +28,7 @@ Cypress.Commands.add('loginLexcentra', () => {
 
 Cypress.Commands.add('loginSpecialUserLexcentra', (username, password) => {
   // Go to login page
-  cy.visit(Cypress.env('LEXAUTH_PATH'));
+  cy.visitAuthPage();
 
   // Fill in email and password
   cy.get('input[placeholder="Nhập email"]').should('be.visible').type(username, { log: false });
@@ -48,7 +48,7 @@ Cypress.Commands.add('logoutLexcentra', () => {
 
 Cypress.Commands.add('checkCreditLexGPT', (minCredit) => {
   // Mở menu người dùng
-  cy.visit(Cypress.env('URL_LEXGPT_NEW_CONVERSATION'));
+  cy.visitNewConversation();
 
   cy.get('img[alt="credit-icon"]').should('be.visible');
   cy.get('img[alt="credit-icon"]')
@@ -70,21 +70,61 @@ Cypress.Commands.add('typingAIBox', (question) => {
     .trigger('input');
 
   cy.get('#customTextarea').should('have.value', question);
+
+  cy.proxyLexGPT();
+
   cy.get("button.button-send-ai").click();
 });
 
-Cypress.Commands.add('waitForAiResponse', (timeout = Cypress.env('URL_LEXTGPT_TIMEOUT') || 120000) => {
-
-  const timeoutMs = Number(timeout);
-  cy.get('button.button-send-ai').should('exist');
-
-  cy.log('⏳ Đợi AI trả lời xong...');
-  cy.get('button.button-send-ai', { timeout: timeoutMs })
-    .should(($btn) => {
-      expect($btn).not.to.have.class('button-send-ai-disabled');
+Cypress.Commands.add('uploadAIBox', (fileName, fileDescription) => {
+  cy.get('div.box-message-new-ai')
+    .should('exist')
+    .should('be.visible').
+    within(() => {
+      cy.get('button.btn-show-in-assistant').should('be.visible').click();
     });
 
-  cy.log('✅ AI đã trả lời xong');
+  cy.get('div#modal-upload-file-lexgpt___BV_modal_content_')
+    .should('exist')
+    .should('be.visible')
+    .within(() => {
+      cy.get('div#modal-upload-file-lexgpt___BV_modal_body_').should('be.visible')
+        .within(() => {
+          cy.get('input[type="file"]').attachFile(fileName, { force: true });
+          cy.get('textarea.file-details-textarea').type(fileDescription);
+        });
+
+      cy.get('#modal-upload-file-lexgpt___BV_modal_footer_')
+        .should('exist')
+        .should('be.visible')
+        .within(() => {
+          cy.get('button.btn-upload-lexgpt').click();
+        });
+    });
+});
+
+Cypress.Commands.add('waitForAiResponse', (timeout = Cypress.env('LEXGPT_TIMEOUT') || 120000) => {
+  const timeoutMs = Number(timeout);
+  cy.url({ timeout: 60000 }).should('match', /\/assistant\/lexgpt\/[0-9a-f-]{36}$/);
+
+  cy.get('button.button-send-ai').should('exist');
+  cy.log('⏳ Đợi AI trả lời xong...');
+  cy.wait('@proxyLexGPT', { timeout: timeoutMs }).then((interception) => {
+
+    const { statusCode, body } = interception.response;
+    cy.log('📦 Response body:', JSON.stringify(body, null, 2));
+    // Nếu muốn log ra console (đầy đủ hơn, có thể expand trong DevTools)
+    console.log('📨 Request:', interception.request);
+    console.log('📩 Response:', interception.response);
+
+    expect(statusCode).to.eq(200);
+
+    cy.log('✅ AI đã trả lời xong');
+    cy.get('button.button-send-ai', { timeout: timeoutMs })
+      .should(($btn) => {
+        expect($btn).not.to.have.class('button-send-ai-disabled');
+      });
+  });
 
   // Check that markdown-wrapper exists and is visible
   cy.get('div.markdown-wrapper', { timeout: 30000 })

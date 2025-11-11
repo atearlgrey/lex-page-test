@@ -1,10 +1,9 @@
-const urlReviewContract = Cypress.env('URL_REVIEW_CONTRACT') || '/assistant/document-review';
-const apiReviewContract = Cypress.env('API_REVIEW_CONTRACT') || '**/api/document-review/v1.0/review-full';
-const timeoutReviewContract = Number(Cypress.env('TIMEOUT_REVIEW_CONTRACT')) || 600000;
+const urlReviewContract = Cypress.env('REVIEW_CONTRACT_URL') || '/assistant/document-review';
+const timeoutReviewContract = Number(Cypress.env('REVIEW_CONTRACT_TIMEOUT')) || 600000;
 
 export function useReviewDocument(canUse) {
   // Vào trang LextGPT trước
-  cy.visit(Cypress.env('URL_LEXGPT_NEW_CONVERSATION'));
+  cy.visitNewConversation();
   // 1️⃣ Mở tab Rà soát
   cy.contains('span', 'Rà soát')
     .should('be.visible')
@@ -45,14 +44,14 @@ export function useReviewDocument(canUse) {
         .should('be.visible')
         .type('Người lao động');
 
-      cy.intercept('POST', apiReviewContract).as('reviewContract');
+      cy.proxyReviewContract();
 
       // Tiếp tục đến trang document-review
       cy.contains('button', 'Tiếp tục').should('be.visible').click();
     });
   if (canUse) {
     cy.log('✅ User can use Review Document features');
-    cy.wait('@reviewContract', { timeout: timeoutReviewContract }).then((interception) => {
+    cy.wait('@proxyReviewContract', { timeout: timeoutReviewContract }).then((interception) => {
       expect(interception.response.statusCode).to.eq(200);
       cy.log('✅ API drafting contract returned 200');
     });
