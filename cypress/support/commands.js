@@ -1,5 +1,16 @@
 import { parseAmount } from './utils/numberUtils';
 
+Cypress.Commands.add('loginWithMockGoogle', () => {
+  const accessToken = 'Bearer%20' + Cypress.env('USER_GOOGLE_JWT_TOKEN');
+
+  cy.setCookie('auth_token.local', accessToken, {
+    domain: 'user-stg.lexcentra.ai',
+    path: '/',
+    secure: true,
+    httpOnly: false,
+  });
+});
+
 Cypress.Commands.add('loginLexcentra', () => {
   // Go to login page
   cy.visit(Cypress.env('LEXAUTH_PATH'));

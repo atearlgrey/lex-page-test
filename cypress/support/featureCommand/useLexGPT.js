@@ -14,13 +14,12 @@ export function useLexGPT(canUse) {
   cy.waitForAiResponse();
   if (canUse) {
     cy.log('✅ User can use LextGPT features');
-
-    // Kiểm tra box sau khi hoàn tất
-    cy.contains('Câu hỏi bạn có thể quan tâm', { timeout: 30000 })
-      .scrollIntoView({ duration: 3000 })
-      .should('be.visible');
+    
+    // Kiểm tra box AI trả lời
+    cy.get('div.block-list-feedback').should('be.visible');
   } else {
     cy.log('❌ User cannot use LextGPT features - showing upgrade message');
+    cy.get('div#modal-upgrade-plan___BV_modal_content_').should('be.visible');
   }
 }
 

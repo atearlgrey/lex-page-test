@@ -36,17 +36,17 @@ describe('Basic Package', () => {
     useFindJudgementInLexGPT(canUseFeature(packageType, featureKey));
   });
 
-  it(`user uses ${packageType} package can not using find judgement`, () => {
+  it(`user uses ${packageType} package can using find judgement`, () => {
     const featureKey = 'findJudgement';
     useFindJudgement(canUseFeature(packageType, featureKey));
   });
 
-  it(`user uses ${packageType} package using document review`, () => {
+  it(`user uses ${packageType} package can not using document review`, () => {
     const featureKey = 'reviewDocument';
     useReviewDocument(canUseFeature(packageType, featureKey));
   });
 
-  it(`user uses ${packageType} package using document draft`, () => {
+  it(`user uses ${packageType} package can not using document draft`, () => {
     const featureKey = 'draftDocument';
     useDraftDocument(canUseFeature(packageType, featureKey));
   });

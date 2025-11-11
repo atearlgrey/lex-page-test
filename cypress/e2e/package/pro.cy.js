@@ -31,22 +31,22 @@ describe('Pro Package', () => {
     useLexGPT(canUseFeature(packageType, featureKey));
   });
 
-  it(`user uses ${packageType} package can not using search judgement`, () => {
+  it(`user uses ${packageType} package can using search judgement`, () => {
     const featureKey = 'findJudgementInLexGPT';
     useFindJudgementInLexGPT(canUseFeature(packageType, featureKey));
   });
 
-  it(`user uses ${packageType} package can not using find judgement`, () => {
+  it(`user uses ${packageType} package can using find judgement`, () => {
     const featureKey = 'findJudgement';
     useFindJudgement(canUseFeature(packageType, featureKey));
   });
 
-  it(`user uses ${packageType} package using document review`, () => {
+  it(`user uses ${packageType} package can using document review`, () => {
     const featureKey = 'reviewDocument';
     useReviewDocument(canUseFeature(packageType, featureKey));
   });
 
-  it(`user uses ${packageType} package using document draft`, () => {
+  it(`user uses ${packageType} package can using document draft`, () => {
     const featureKey = 'draftDocument';
     useDraftDocument(canUseFeature(packageType, featureKey));
   });

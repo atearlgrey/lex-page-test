@@ -7,7 +7,7 @@ export const featureMatrix = {
   findJudgementInLexGPT: {
     name: 'Find Judgement in LexGPT',
     command: 'useFindJudgementInLexGPT',
-    packages: ['basic', 'pro', 'enterprise'],
+    packages: ['pro', 'enterprise'],
   },
   findJudgement: {
     name: 'Find Judgement',
@@ -17,12 +17,12 @@ export const featureMatrix = {
   draftDocument: {
     name: 'Draft Document',
     command: 'useDraftDocument',
-    packages: ['freemium', 'basic', 'pro', 'enterprise'],
+    packages: ['freemium', 'pro', 'enterprise'],
   },
   reviewDocument: {
     name: 'Review Document',
     command: 'useReviewDocument',
-    packages: ['freemium', 'basic', 'pro', 'enterprise'],
+    packages: ['freemium', 'pro', 'enterprise'],
   },
 };
 

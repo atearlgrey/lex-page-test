@@ -1,3 +1,5 @@
+const searchUrl = Cypress.env('LEXT_SEARCH_PATH');
+const timeoutFindJudgement = Number(Cypress.env('TIMEOUT_FIND_JUDGEMENT') || 300000);
 const judgementQuestion = "bản án về tàng trữ trái phép chất ma túy số lượng lớn";
 const needUpgradeLink = "/plan-packages";
 const needUpgradePackageMessage = "Nâng cấp gói ngay!";
@@ -17,6 +19,9 @@ export const useFindJudgementInLexGPT = (canUse) => {
 
   if (canUse) {
     cy.log('✅ User can use Find Judgement LexGPT features');
+
+    // Kiểm tra box AI trả lời
+    cy.get('div.block-list-feedback').should('be.visible');
   } else {
     cy.log('❌ User cannot use Find Judgement LexGPT features - showing upgrade message');
 
@@ -46,7 +51,9 @@ export const useFindJudgement = (canUse) => {
 
   if (canUse) {
     cy.log('✅ User can use Find Judgement features');
+    cy.url({ timeout: timeoutFindJudgement }).should('include', searchUrl)
   } else {
     cy.log('❌ User cannot use Find Judgement - showing upgrade message');
+    cy.get('div#modal-upgrade-plan___BV_modal_content_').should('be.visible');
   }
 }
