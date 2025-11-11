@@ -136,3 +136,14 @@ Cypress.Commands.add('waitForAiResponse', (timeout = Cypress.env('LEXGPT_TIMEOUT
     .find('*:last')
     .scrollIntoView({ duration: 3000 });
 });
+
+Cypress.Commands.add('waitForRegisterAPIResponse', (proxyName, statusCodeExpect, timeout = 3000) => {
+  cy.wait(proxyName ?? '@proxyRegister', { timeout: timeout }).then((interception) => {
+    console.log('📨 Request:', interception.request);
+    const { statusCode, body } = interception.response;
+    cy.log('📦 Response body:', JSON.stringify(body, null, 2));
+    console.log('📩 Response:', interception.response);
+
+    expect(statusCode).to.eq(statusCodeExpect);
+  });
+});
