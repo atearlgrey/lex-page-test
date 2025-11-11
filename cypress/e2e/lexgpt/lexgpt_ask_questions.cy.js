@@ -1,45 +1,52 @@
-describe('LexGPT Ask Questions', () => {
-  beforeEach(() => {
-    cy.session('lexgpt-session', () => {
-      cy.loginLexcentra(); // hàm tự định nghĩa ở trên
-    });
-  });
-  
+function chunkArray(arr, size) {
+  const res = [];
+  for (let i = 0; i < arr.length; i += size) res.push(arr.slice(i, i + size));
+  return res;
+}
+
+describe('LexGPT Ask Questions (multi-file, paged)', () => {
+  let files = [];
+  let allData = [];
+
   before(() => {
-    cy.fixture('questions.json').then((data) => {
-      cy.wrap(data).as('questions');
+    const dir = 'cypress/fixtures/lexgpt';
+    const fileName = Cypress.env('fileName') || null;
+
+    cy.task('readLexgptFiles', { dir, fileName }).then(({ files: f, data }) => {
+      files = f;
+      allData = data;
     });
   });
 
-  it('asks each question sequentially and saves conversation URLs', function () {
-    this.questions.forEach((q, i) => {
-      const question = q.question;
-      cy.log(`⚙️ Start Question ${i + 1}: ${question}`);
+  it('Run questions by page', () => {
+    const pages = chunkArray(allData, 10);
+    cy.session('lexgpt-session', () => cy.loginLexcentra());
 
-      // Open new conversation page
-      cy.visitNewConversation();
+    pages.forEach((page, pageIndex) => {
+      page.forEach((q, i) => {
+        const question = q.question;
+        const qIndex = pageIndex * 10 + i + 1;
 
-      cy.get('#customTextarea')
-        .should('be.visible')
-        .clear()
-        .invoke('val', question)   // set value question to textarea with \n character
-        .trigger('input');         // check react input change
+        cy.log(`⚙️ ${files.join(', ')} | Q${qIndex}: ${question}`);
+        cy.visitNewConversation();
+        cy.typingAIBox(question);
+        cy.get('button.button-send-ai').click();
+        cy.url({ timeout: 60000 }).should('match', /\/assistant\/lexgpt\/[0-9a-f-]{36}$/);
 
-      cy.get('#customTextarea').should('have.value', question);
+        cy.url().then((url) => {
+          const baseName = files.map(f => f.replace('.json', '')).join('_');
+          const dir = `cypress/output/lexgpt/${baseName}`;
+          const fileName = `conversation_${baseName}_page${pageIndex + 1}.txt`;
 
-      cy.get("button[class='button-send-ai']").click();
-
-      // Wait redirect to /assistant/lexgpt/{id} page
-      cy.url({ timeout: 60000 }).should('match', /\/assistant\/lexgpt\/[0-9a-f-]{36}$/);
-
-      // Write conversation URL to file
-      cy.url().then((currentUrl) => {
-        cy.log(`✅ Question ${i + 1}: ${question}`);
-        cy.log('Conversation URL:', currentUrl);
-
-        cy.writeFile('cypress/downloads/conversation_urls.txt', `${question}\n${currentUrl}\n\n`, {
-          flag: 'a+',
+          // ✅ Ghi ra thư mục output/ (không bị Cypress xoá)
+          cy.task('writeConversationFile', {
+            dir,
+            fileName,
+            content: `Q${qIndex}: ${question}\n${url}\n`,
+          });
         });
+
+        cy.wait(1500);
       });
     });
   });

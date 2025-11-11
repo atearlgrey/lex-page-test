@@ -7,7 +7,8 @@
     "install": "cypress install",
     "test:dev": "cross-env CYPRESS_ENV=dev npx cypress open --browser electron",
     "test:stg": "cross-env CYPRESS_ENV=stg npx cypress open --browser electron",
-    "test:prod": "cross-env CYPRESS_ENV=prod npx cypress open --browser electron"
+    "test:prod": "cross-env CYPRESS_ENV=prod npx cypress open --browser electron",
+    "test:lexgpt": "cross-env CYPRESS_ENV=stg npx cypress run --spec 'cypress/e2e/lexgpt/lexgpt_ask_questions.cy.js' --browser chrome --headless"
   },
   "keywords": [],
   "author": "",

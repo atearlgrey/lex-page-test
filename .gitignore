@@ -17,6 +17,7 @@ coverage/
 cypress/videos/
 cypress/screenshots/
 cypress/downloads/
+cypress/output/
 
 # Cypress env file (often contains secrets) and local env files
 cypress.env.json
