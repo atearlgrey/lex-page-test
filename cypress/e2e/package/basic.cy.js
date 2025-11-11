@@ -1,4 +1,4 @@
-import { useLexGPT, useFindJudgementInLexGPT, useFindJudgement, useDraftDocument, useReviewDocument } from '@featureCommand';
+import { useLexGPT, useFindJudgementInLexGPT, useFindJudgement, useFindJudgementAdvance, useDraftDocument, useReviewDocument } from '@featureCommand';
 import { featureMatrix, canUseFeature } from './featureMatrix';
 
 const packageType = 'basic';
@@ -39,6 +39,11 @@ describe('Basic Package', () => {
   it(`user uses ${packageType} package can using find judgement`, () => {
     const featureKey = 'findJudgement';
     useFindJudgement(canUseFeature(packageType, featureKey));
+  });
+
+  it.only(`user uses ${packageType} package can not using find judgement advance`, () => {
+    const featureKey = 'findJudgement';
+    useFindJudgementAdvance(canUseFeature(packageType, featureKey), false);
   });
 
   it(`user uses ${packageType} package can not using document review`, () => {
