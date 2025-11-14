@@ -147,3 +147,14 @@ Cypress.Commands.add('waitForRegisterAPIResponse', (proxyName, statusCodeExpect,
     expect(statusCode).to.eq(statusCodeExpect);
   });
 });
+
+Cypress.Commands.add('waitForAPIResponse', (proxyName, statusCodeExpect, timeout = 3000) => {
+  cy.wait(proxyName, { timeout: timeout }).then((interception) => {
+    console.log('📨 Request:', interception.request);
+    const { statusCode, body } = interception.response;
+    cy.log('📦 Response body:', JSON.stringify(body, null, 2));
+    console.log('📩 Response:', interception.response);
+
+    expect(statusCode).to.eq(statusCodeExpect);
+  });
+});

@@ -6,6 +6,10 @@ Cypress.Commands.add('visitRegisterPage', () => {
   cy.visit(Cypress.env('LEX_REGISTER_URL') || '/auth/register');
 });
 
+Cypress.Commands.add('visitRequestDemoPage', () => {
+  cy.visit(Cypress.env('LEX_REQUEST_DEMO_URL') || '/request-demo')
+});
+
 Cypress.Commands.add('visitNewConversation', () => {
   cy.visit(Cypress.env('LEXGPT_NEW_CONVERSATION_URL') || '/assistant/lexgpt/new');
 });
