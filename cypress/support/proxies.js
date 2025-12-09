@@ -8,6 +8,10 @@ Cypress.Commands.add('proxyRegister', () => {
   cy.intercept('POST', '**/api/auth/user/v2.0/register').as('proxyRegister');
 });
 
+Cypress.Commands.add('proxyLogin', () => {
+  cy.intercept('POST', '**/api/auth/user/login').as('proxyLogin');
+});
+
 Cypress.Commands.add('proxyLexGPT', () => {
   cy.intercept('POST', Cypress.env('LEXGPT_API')).as('proxyLexGPT');
 });
