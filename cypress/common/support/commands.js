@@ -17,7 +17,7 @@ Cypress.Commands.add('loginLexcentra', () => {
 
   // Fill in email and password
   cy.get('input[placeholder="Nhập email"]').should('be.visible').type(Cypress.env('LOGIN_EMAIL'), { log: false });
-  cy.get('input[id="password-field"]').should('be.visible').type(Cypress.env('LOGIN_PASS'), { log: false });
+  cy.get('input[type="password"]').should('be.visible').type(Cypress.env('LOGIN_PASS'), { log: false });
 
   cy.proxyLogin();
 
@@ -35,7 +35,7 @@ Cypress.Commands.add('loginSpecialUserLexcentra', (username, password) => {
 
   // Fill in email and password
   cy.get('input[placeholder="Nhập email"]').should('be.visible').type(username, { log: false });
-  cy.get('input[id="password-field"]').should('be.visible').type(password, { log: false });
+  cy.get('input[type="password"]').should('be.visible').type(password, { log: false });
 
   cy.proxyLogin();
   

@@ -7,7 +7,7 @@ describe('Login Page', () => {
     cy.get('div[class="form_login_content"]').should('be.visible').within(() => {
       cy.get('button[class="css-button-google"]').should('be.visible');
       cy.get('input[placeholder="Nhập email"]').should('be.visible');
-      cy.get('input[id="password-field"]').should('be.visible');
+      cy.get('input[type="password"]').should('be.visible');
       cy.get('button[type="submit"]').contains('Đăng nhập').should('be.visible');
     });
   });

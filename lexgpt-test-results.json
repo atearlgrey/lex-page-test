@@ -1,0 +1,12 @@
+[
+  {
+    "testName": "TC02: Components Display",
+    "status": "PASS",
+    "timestamp": "2026-06-01T16:45:58.032Z",
+    "details": {
+      "qnaComponentVisible": true,
+      "textareaVisible": true,
+      "sendButtonVisible": true
+    }
+  }
+]

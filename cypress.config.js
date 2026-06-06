@@ -24,6 +24,8 @@ const dynamicEnv = { ...process.env };
 
 module.exports = defineConfig({
   e2e: {
+    supportFile: 'cypress/common/support/e2e.js',
+    specPattern: 'cypress/sites/**/e2e/**/*.cy.{js,jsx,ts,tsx}',
     baseUrl: process.env.BASE_URL,
     env: dynamicEnv,
     viewportWidth: 1280,

@@ -1,0 +1,443 @@
+{
+  "project": "VIB LexGPT",
+  "testFramework": "Playwright",
+  "testDate": "2026-06-01",
+  "testEnvironment": "Development",
+  "credentials": {
+    "email": "quynhtrangnguyen26@gmail.com",
+    "password": "Admin@123"
+  },
+  "applicationUrls": {
+    "loginPage": "https://vib-client-dev.hacvntech.com/login",
+    "lexgptPage": "https://vib-client-dev.hacvntech.com/"
+  },
+  "testCases": [
+    {
+      "id": "TC01",
+      "title": "User should successfully login to VIB LexGPT",
+      "priority": "CRITICAL",
+      "description": "Verify that a user can successfully login with valid credentials",
+      "preconditions": [
+        "User has valid login credentials",
+        "Browser is at login page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to login page",
+          "selector": "https://vib-client-dev.hacvntech.com/login"
+        },
+        {
+          "step": 2,
+          "action": "Fill email input with 'quynhtrangnguyen26@gmail.com'",
+          "selector": "body div#root form input[type=email]"
+        },
+        {
+          "step": 3,
+          "action": "Fill password input with 'Admin@123'",
+          "selector": "body div#root form input[type=password]"
+        },
+        {
+          "step": 4,
+          "action": "Click submit button",
+          "selector": "body div#root form button[type=submit]"
+        },
+        {
+          "step": 5,
+          "action": "Wait for redirect to main page",
+          "selector": "body div#root main"
+        }
+      ],
+      "expectedResult": "User is redirected to LexGPT main page and main element is visible",
+      "testData": {
+        "email": "quynhtrangnguyen26@gmail.com",
+        "password": "Admin@123"
+      }
+    },
+    {
+      "id": "TC02",
+      "title": "LexGPT page should display all required components",
+      "priority": "HIGH",
+      "description": "Verify that all UI components are visible and accessible on the LexGPT page",
+      "preconditions": [
+        "User is logged in",
+        "User is on the LexGPT main page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to LexGPT page",
+          "selector": "https://vib-client-dev.hacvntech.com/"
+        },
+        {
+          "step": 2,
+          "action": "Verify QNA scrollbar component is visible",
+          "selector": "body div#root main div.vib-qna-scrollbar"
+        },
+        {
+          "step": 3,
+          "action": "Verify textarea input is visible",
+          "selector": "body div#root main div.vib-qna-scrollbar textarea[placeholder=\"Hãy đặt câu hỏi cho tôi\"]"
+        },
+        {
+          "step": 4,
+          "action": "Verify send button is visible",
+          "selector": "body div#root main div.vib-qna-scrollbar div.items-center.justify-between button.w-10.h-10.rounded-full"
+        }
+      ],
+      "expectedResult": "All components (QNA scrollbar, textarea, send button) are visible and accessible",
+      "components": [
+        {
+          "name": "QNA Scrollbar Component",
+          "selector": "body div#root main div.vib-qna-scrollbar",
+          "type": "Container"
+        },
+        {
+          "name": "Question Textarea",
+          "selector": "body div#root main div.vib-qna-scrollbar textarea[placeholder=\"Hãy đặt câu hỏi cho tôi\"]",
+          "type": "Input",
+          "placeholder": "Hãy đặt câu hỏi cho tôi"
+        },
+        {
+          "name": "Send Button",
+          "selector": "body div#root main div.vib-qna-scrollbar div.items-center.justify-between button.w-10.h-10.rounded-full",
+          "type": "Button",
+          "classes": "w-10 h-10 rounded-full"
+        },
+        {
+          "name": "Toolbar",
+          "selector": "body div#root main div.vib-qna-scrollbar div.items-center.justify-between",
+          "type": "Container",
+          "classes": "items-center justify-between"
+        }
+      ]
+    },
+    {
+      "id": "TC03",
+      "title": "User should be able to ask a single question",
+      "priority": "CRITICAL",
+      "description": "Verify that a user can successfully type and submit a single question",
+      "preconditions": [
+        "User is logged in",
+        "User is on the LexGPT page",
+        "Textarea is visible and enabled"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click on the textarea to focus",
+          "selector": "body div#root main div.vib-qna-scrollbar textarea[placeholder=\"Hãy đặt câu hỏi cho tôi\"]"
+        },
+        {
+          "step": 2,
+          "action": "Type the question: 'What are my legal rights?'",
+          "selector": "body div#root main div.vib-qna-scrollbar textarea[placeholder=\"Hãy đặt câu hỏi cho tôi\"]",
+          "input": "What are my legal rights?"
+        },
+        {
+          "step": 3,
+          "action": "Verify the question text is entered in textarea",
+          "selector": "body div#root main div.vib-qna-scrollbar textarea[placeholder=\"Hãy đặt câu hỏi cho tôi\"]"
+        },
+        {
+          "step": 4,
+          "action": "Click the send button",
+          "selector": "body div#root main div.vib-qna-scrollbar div.items-center.justify-between button.w-10.h-10.rounded-full"
+        },
+        {
+          "step": 5,
+          "action": "Wait for AI response and textarea to clear",
+          "timeout": 5000
+        }
+      ],
+      "expectedResult": "Question is submitted successfully, textarea is cleared, and AI response appears",
+      "testData": {
+        "question": "What are my legal rights?"
+      },
+      "assertions": [
+        "Textarea contains the question text",
+        "Textarea is cleared after submission",
+        "AI response is received",
+        "Response appears in the QNA component"
+      ]
+    },
+    {
+      "id": "TC04",
+      "title": "User should be able to ask multiple questions",
+      "priority": "HIGH",
+      "description": "Verify that a user can successfully submit multiple questions in sequence",
+      "preconditions": [
+        "User is logged in",
+        "User is on the LexGPT page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Ask first question",
+          "question": "What is contract law?"
+        },
+        {
+          "step": 2,
+          "action": "Wait for response",
+          "timeout": 2000
+        },
+        {
+          "step": 3,
+          "action": "Ask second question",
+          "question": "How do I draft a document?"
+        },
+        {
+          "step": 4,
+          "action": "Wait for response",
+          "timeout": 2000
+        },
+        {
+          "step": 5,
+          "action": "Ask third question",
+          "question": "Tell me about LexGPT"
+        },
+        {
+          "step": 6,
+          "action": "Wait for response",
+          "timeout": 2000
+        }
+      ],
+      "expectedResult": "All three questions are submitted successfully with responses received for each",
+      "testData": {
+        "questions": [
+          "What is contract law?",
+          "How do I draft a document?",
+          "Tell me about LexGPT"
+        ]
+      },
+      "assertions": [
+        "First question is submitted successfully",
+        "First response is received",
+        "Second question is submitted successfully",
+        "Second response is received",
+        "Third question is submitted successfully",
+        "Third response is received"
+      ]
+    },
+    {
+      "id": "TC05",
+      "title": "Textarea should be enabled and responsive",
+      "priority": "HIGH",
+      "description": "Verify that the textarea input is enabled and responds to user input",
+      "preconditions": [
+        "User is logged in",
+        "User is on the LexGPT page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Locate the textarea element",
+          "selector": "body div#root main div.vib-qna-scrollbar textarea[placeholder=\"Hãy đặt câu hỏi cho tôi\"]"
+        },
+        {
+          "step": 2,
+          "action": "Verify textarea is visible",
+          "validation": "isVisible()"
+        },
+        {
+          "step": 3,
+          "action": "Verify textarea is enabled (not disabled)",
+          "validation": "!disabled"
+        },
+        {
+          "step": 4,
+          "action": "Click on textarea to focus",
+          "selector": "body div#root main div.vib-qna-scrollbar textarea[placeholder=\"Hãy đặt câu hỏi cho tôi\"]"
+        },
+        {
+          "step": 5,
+          "action": "Type test input 'Test input'",
+          "input": "Test input"
+        },
+        {
+          "step": 6,
+          "action": "Verify text appears in textarea",
+          "validation": "inputValue.contains('Test input')"
+        }
+      ],
+      "expectedResult": "Textarea is enabled, visible, and responsive to user input",
+      "assertions": [
+        "Textarea is visible on the page",
+        "Textarea is not disabled",
+        "Text input is registered in textarea",
+        "User can type and see text in real-time"
+      ]
+    },
+    {
+      "id": "TC06",
+      "title": "Send button should be functional",
+      "priority": "CRITICAL",
+      "description": "Verify that the send button is visible, enabled, and clickable",
+      "preconditions": [
+        "User is logged in",
+        "User is on the LexGPT page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Locate the send button",
+          "selector": "body div#root main div.vib-qna-scrollbar div.items-center.justify-between button.w-10.h-10.rounded-full"
+        },
+        {
+          "step": 2,
+          "action": "Verify send button is visible",
+          "validation": "isVisible()"
+        },
+        {
+          "step": 3,
+          "action": "Verify send button is enabled",
+          "validation": "!disabled"
+        },
+        {
+          "step": 4,
+          "action": "Type a test question",
+          "input": "Test question"
+        },
+        {
+          "step": 5,
+          "action": "Click the send button",
+          "action_type": "click"
+        },
+        {
+          "step": 6,
+          "action": "Verify question was submitted",
+          "validation": "textarea cleared"
+        }
+      ],
+      "expectedResult": "Send button is visible, enabled, and successfully submits questions",
+      "assertions": [
+        "Send button is visible",
+        "Send button is enabled (not disabled)",
+        "Send button is clickable",
+        "Click action submits the question"
+      ]
+    },
+    {
+      "id": "TC07",
+      "title": "Session should persist after page refresh",
+      "priority": "MEDIUM",
+      "description": "Verify that user session persists after page refresh",
+      "preconditions": [
+        "User is logged in"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to LexGPT page",
+          "selector": "https://vib-client-dev.hacvntech.com/"
+        },
+        {
+          "step": 2,
+          "action": "Verify main page element is visible",
+          "selector": "body div#root main"
+        },
+        {
+          "step": 3,
+          "action": "Refresh the page",
+          "action_type": "reload"
+        },
+        {
+          "step": 4,
+          "action": "Wait for page to load",
+          "timeout": 10000
+        },
+        {
+          "step": 5,
+          "action": "Verify still logged in",
+          "selector": "body div#root main"
+        }
+      ],
+      "expectedResult": "User remains logged in after page refresh, main element is visible",
+      "assertions": [
+        "User is logged in before refresh",
+        "Page reload completes successfully",
+        "User is still logged in after refresh",
+        "Main element is visible after refresh"
+      ]
+    }
+  ],
+  "pageStructure": {
+    "loginPage": {
+      "root": "body div#root form",
+      "elements": [
+        {
+          "name": "Email Input",
+          "selector": "body div#root form input[type=email]",
+          "type": "email",
+          "required": true
+        },
+        {
+          "name": "Password Input",
+          "selector": "body div#root form input[type=password]",
+          "type": "password",
+          "required": true
+        },
+        {
+          "name": "Submit Button",
+          "selector": "body div#root form button[type=submit]",
+          "type": "button",
+          "required": true
+        }
+      ]
+    },
+    "lexgptPage": {
+      "root": "body div#root main",
+      "elements": [
+        {
+          "name": "QNA Container",
+          "selector": "body div#root main div.vib-qna-scrollbar",
+          "type": "div",
+          "class": "vib-qna-scrollbar"
+        },
+        {
+          "name": "Textarea Input",
+          "selector": "body div#root main div.vib-qna-scrollbar textarea[placeholder=\"Hãy đặt câu hỏi cho tôi\"]",
+          "type": "textarea",
+          "placeholder": "Hãy đặt câu hỏi cho tôi"
+        },
+        {
+          "name": "Toolbar",
+          "selector": "body div#root main div.vib-qna-scrollbar div.items-center.justify-between",
+          "type": "div",
+          "class": "items-center justify-between"
+        },
+        {
+          "name": "Send Button",
+          "selector": "body div#root main div.vib-qna-scrollbar div.items-center.justify-between button.w-10.h-10.rounded-full",
+          "type": "button",
+          "class": "w-10 h-10 rounded-full"
+        }
+      ]
+    }
+  },
+  "testSummary": {
+    "totalTestCases": 7,
+    "criticalTests": 3,
+    "highPriorityTests": 3,
+    "mediumPriorityTests": 1,
+    "estimatedExecutionTime": "15-20 minutes",
+    "notes": "All tests require valid credentials and access to the VIB LexGPT application"
+  },
+  "executionInstructions": {
+    "setup": [
+      "Install Playwright: npm install -D @playwright/test",
+      "Update playwright.config.ts if needed",
+      "Ensure test file is in tests directory"
+    ],
+    "run": [
+      "Run all tests: npx playwright test lexgpt.spec.ts",
+      "Run specific test: npx playwright test lexgpt.spec.ts -g 'TC01'",
+      "Run with UI: npx playwright test --ui",
+      "Run headed (see browser): npx playwright test --headed"
+    ],
+    "results": {
+      "location": "lexgpt-test-results.json",
+      "format": "JSON with test results, status, and details"
+    }
+  }
+}

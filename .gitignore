@@ -19,6 +19,14 @@ cypress/screenshots/
 cypress/downloads/
 cypress/output/
 
+playwright/videos/
+playwright/screenshots/
+playwright/downloads/
+playwright/input/
+playwright/output/
+playwright-report/
+test-results/
+
 # Cypress env file (often contains secrets) and local env files
 cypress.env.json
 
