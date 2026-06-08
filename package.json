@@ -18,7 +18,8 @@
     "playwright:test:api-verbose": "cd playwright && npx playwright test tests/lexgpt-api.spec.ts -v",
     "playwright:test:ui": "cd playwright && npx playwright test tests/lexgpt-api.spec.ts --ui",
     "playwright:debug": "cd playwright && npx playwright test tests/lexgpt-api.spec.ts --debug",
-    "playwright:show": "cd playwright && npx playwright show-report"
+    "playwright:show": "cd playwright && npx playwright show-report",
+    "lextgpt:test": "cd lext-gpt && node test-api.js"
   },
   "keywords": [],
   "author": "",
