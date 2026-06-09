@@ -19,7 +19,8 @@
     "playwright:test:ui": "cd playwright && npx playwright test tests/lexgpt-api.spec.ts --ui",
     "playwright:debug": "cd playwright && npx playwright test tests/lexgpt-api.spec.ts --debug",
     "playwright:show": "cd playwright && npx playwright show-report",
-    "lextgpt:test": "cd lext-gpt && node test-api.js"
+    "lextgpt:test": "cd lext-gpt && node test-api.js",
+    "lextgpt:server": "cd lext-gpt && node server.js"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +32,8 @@
     "cypress": "^15.6.0",
     "cypress-file-upload": "^5.0.8",
     "dotenv": "^17.2.3",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
     "webpack": "^5.102.1",
     "xlsx": "^0.18.5"
   }

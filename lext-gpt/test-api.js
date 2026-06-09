@@ -8,8 +8,11 @@ const QUESTION_FILE = path.join(__dirname, 'question.json');
 
 /**
  * Send a question to the API and collect the streamed response
+ * @param {string} question - The question to ask
+ * @param {string} apiEndpoint - Optional API endpoint (defaults to API_ENDPOINT)
+ * @param {string} authToken - Optional auth token (defaults to AUTH_TOKEN)
  */
-async function askQuestion(question) {
+async function askQuestion(question, apiEndpoint = API_ENDPOINT, authToken = AUTH_TOKEN) {
   console.log(`\n📝 Asking: "${question}"`);
 
   const requestBody = {
@@ -21,11 +24,11 @@ async function askQuestion(question) {
   };
 
   try {
-    const response = await fetch(API_ENDPOINT, {
+    const response = await fetch(apiEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': AUTH_TOKEN,
+        'Authorization': 'Bearer ' + authToken,
       },
       body: JSON.stringify(requestBody),
     });
@@ -220,5 +223,12 @@ async function processQuestions() {
   }
 }
 
-// Run the script
-processQuestions();
+// Run the script only if this file is executed directly
+if (require.main === module) {
+  processQuestions();
+}
+
+// Export for use in other modules
+module.exports = { askQuestion, processQuestions };
+
+

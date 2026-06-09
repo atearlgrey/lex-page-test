@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding: 20px;
+    }
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .header h1 {
+      margin: 0;
+      font-weight: 700;
+      font-size: 2.5rem;
+    }
+    .config-section {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .form-section {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+    .question-row {
+      border: 1px solid #e0e0e0;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      background: #fafafa;
+    }
+    .question-row:hover {
+      background: #f5f5f5;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    .question-input, .response-input {
+      min-height: 60px;
+      font-size: 0.95rem;
+      padding: 10px;
+    }
+    .response-input {
+      background: #f0f0f0;
+      cursor: not-allowed;
+    }
+    .btn-action {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      margin: 5px 5px 5px 0;
+    }
+    .btn-copy {
+      background-color: #17a2b8;
+      border-color: #17a2b8;
+      color: white;
+    }
+    .btn-copy:hover {
+      background-color: #138496;
+      border-color: #117a8b;
+    }
+    .btn-ask {
+      background-color: #28a745;
+      border-color: #28a745;
+      color: white;
+    }
+    .btn-ask:hover {
+      background-color: #218838;
+      border-color: #1e7e34;
+    }
+    .btn-ask.loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #e0e0e0;
+    }
+    .btn-batch {
+      background-color: #007bff;
+      border-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1rem;
+    }
+    .btn-batch:hover {
+      background-color: #0056b3;
+      border-color: #004085;
+    }
+    .btn-batch.loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    .btn-save {
+      background-color: #6c757d;
+      border-color: #6c757d;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1rem;
+    }
+    .btn-save:hover {
+      background-color: #5a6268;
+      border-color: #545b62;
+    }
+    .btn-download {
+      background-color: #fd7e14;
+      border-color: #fd7e14;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1rem;
+    }
+    .btn-download:hover {
+      background-color: #e56a00;
+      border-color: #d48806;
+    }
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.8s linear infinite;
+      margin-right: 8px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .toast-notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: white;
+      border-left: 4px solid #28a745;
+      padding: 15px 20px;
+      border-radius: 4px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      animation: slideIn 0.3s ease-out;
+    }
+    .toast-notification.error {
+      border-left-color: #dc3545;
+    }
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #999;
+    }
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      opacity: 0.5;
+    }
+    .row-number {
+      display: inline-block;
+      background: #667eea;
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 30px;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <!-- Header -->
+    <div class="header">
+      <h1><i class="bi bi-chat-dots"></i> LexGPT Questions UI</h1>
+      <p class="mb-0 mt-2">Interactive web interface for asking LexGPT questions</p>
+    </div>
+
+    <!-- Configuration Section -->
+    <div class="config-section">
+      <h3 class="mb-3"><i class="bi bi-gear"></i> Configuration</h3>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="apiUrl" class="form-label">API URL</label>
+          <input type="text" id="apiUrl" class="form-control" placeholder="https://cms.localllm.me/api/management/lexcentra/chat" value="https://cms.localllm.me/api/management/lexcentra/chat">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="authToken" class="form-label">Authorization Token</label>
+          <input type="password" id="authToken" class="form-control" placeholder="Bearer ...">
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Section -->
+    <div class="form-section">
+      <h3 class="mb-3"><i class="bi bi-list-ul"></i> Questions</h3>
+      
+      <div id="questionsContainer">
+        <!-- Questions will be rendered here -->
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button id="btnAddRow" class="btn btn-primary" title="Add a new question row">
+          <i class="bi bi-plus-circle"></i> Add Question
+        </button>
+        <button id="btnBatchAsk" class="btn btn-batch" title="Ask all questions at once">
+          <span class="spinner" style="display: none;"></span>
+          <i class="bi bi-lightning-charge"></i> Ask All
+        </button>
+        <button id="btnSave" class="btn btn-save" title="Save all questions and responses to localStorage">
+          <i class="bi bi-cloud-check"></i> Save
+        </button>
+        <button id="btnDownload" class="btn btn-download" title="Download as question.json">
+          <i class="bi bi-download"></i> Download
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Main App JS -->
+  <script src="/js/app.js"></script>
+</body>
+</html>
