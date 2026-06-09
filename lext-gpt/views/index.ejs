@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %></title>
+  <title>
+    <%= title %>
+  </title>
   <!-- Bootstrap CSS -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
   <!-- Bootstrap Icons -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css"
+    rel="stylesheet">
   <style>
     body {
       background-color: #f8f9fa;
       padding: 20px;
     }
+
     .header {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
@@ -21,11 +26,13 @@
       margin-bottom: 30px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
+
     .header h1 {
       margin: 0;
       font-weight: 700;
       font-size: 2.5rem;
     }
+
     .config-section {
       background: white;
       padding: 20px;
@@ -33,6 +40,7 @@
       margin-bottom: 30px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
+
     .form-section {
       background: white;
       padding: 20px;
@@ -40,6 +48,7 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       margin-bottom: 30px;
     }
+
     .question-row {
       border: 1px solid #e0e0e0;
       padding: 15px;
@@ -47,46 +56,186 @@
       border-radius: 8px;
       background: #fafafa;
     }
+
     .question-row:hover {
       background: #f5f5f5;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
-    .question-input, .response-input {
+
+    .question-input,
+    .response-input {
       min-height: 60px;
       font-size: 0.95rem;
       padding: 10px;
     }
-    .response-input {
-      background: #f0f0f0;
-      cursor: not-allowed;
+
+    .response-display {
+      background: #f8f8f8;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 12px;
+      min-height: 60px;
+      font-size: 0.95rem;
+      overflow-y: auto;
+      max-height: 300px;
     }
+
+    .response-display h1,
+    .response-display h2,
+    .response-display h3,
+    .response-display h4,
+    .response-display h5,
+    .response-display h6 {
+      margin-top: 15px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .response-display h1 {
+      font-size: 1.5rem;
+    }
+
+    .response-display h2 {
+      font-size: 1.3rem;
+    }
+
+    .response-display h3 {
+      font-size: 1.1rem;
+    }
+
+    .response-display h4 {
+      font-size: 1rem;
+    }
+
+    .response-display h5 {
+      font-size: 0.95rem;
+    }
+
+    .response-display h6 {
+      font-size: 0.9rem;
+    }
+
+    .response-display p {
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+
+    .response-display ul,
+    .response-display ol {
+      margin-left: 20px;
+      margin-bottom: 10px;
+    }
+
+    .response-display li {
+      margin-bottom: 5px;
+      line-height: 1.6;
+    }
+
+    .response-display code {
+      background: #f0f0f0;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      padding: 2px 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+
+    .response-display pre {
+      background: #f0f0f0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 12px;
+      overflow-x: auto;
+      margin-bottom: 10px;
+    }
+
+    .response-display pre code {
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .response-display blockquote {
+      border-left: 4px solid #667eea;
+      padding-left: 15px;
+      margin-left: 0;
+      margin-bottom: 10px;
+      color: #666;
+      font-style: italic;
+    }
+
+    .response-display table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .response-display table th,
+    .response-display table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+
+    .response-display table th {
+      background-color: #f5f5f5;
+      font-weight: 600;
+    }
+
+    .response-display strong {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .response-display em {
+      font-style: italic;
+      color: #666;
+    }
+
+    .response-display a {
+      color: #667eea;
+      text-decoration: none;
+      border-bottom: 1px dotted #667eea;
+    }
+
+    .response-display a:hover {
+      color: #764ba2;
+      border-bottom-color: #764ba2;
+    }
+
     .btn-action {
       padding: 8px 16px;
       font-size: 0.9rem;
       margin: 5px 5px 5px 0;
     }
+
     .btn-copy {
       background-color: #17a2b8;
       border-color: #17a2b8;
       color: white;
     }
+
     .btn-copy:hover {
       background-color: #138496;
       border-color: #117a8b;
     }
+
     .btn-ask {
       background-color: #28a745;
       border-color: #28a745;
       color: white;
     }
+
     .btn-ask:hover {
       background-color: #218838;
       border-color: #1e7e34;
     }
+
     .btn-ask.loading {
       opacity: 0.6;
       pointer-events: none;
     }
+
     .action-buttons {
       display: flex;
       flex-wrap: wrap;
@@ -95,6 +244,7 @@
       padding-top: 20px;
       border-top: 1px solid #e0e0e0;
     }
+
     .btn-batch {
       background-color: #007bff;
       border-color: #007bff;
@@ -102,14 +252,17 @@
       padding: 10px 20px;
       font-size: 1rem;
     }
+
     .btn-batch:hover {
       background-color: #0056b3;
       border-color: #004085;
     }
+
     .btn-batch.loading {
       opacity: 0.6;
       pointer-events: none;
     }
+
     .btn-save {
       background-color: #6c757d;
       border-color: #6c757d;
@@ -117,10 +270,12 @@
       padding: 10px 20px;
       font-size: 1rem;
     }
+
     .btn-save:hover {
       background-color: #5a6268;
       border-color: #545b62;
     }
+
     .btn-download {
       background-color: #fd7e14;
       border-color: #fd7e14;
@@ -128,10 +283,12 @@
       padding: 10px 20px;
       font-size: 1rem;
     }
+
     .btn-download:hover {
       background-color: #e56a00;
       border-color: #d48806;
     }
+
     .spinner {
       display: inline-block;
       width: 20px;
@@ -142,9 +299,13 @@
       animation: spin 0.8s linear infinite;
       margin-right: 8px;
     }
+
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
+
     .toast-notification {
       position: fixed;
       top: 20px;
@@ -157,29 +318,35 @@
       z-index: 1000;
       animation: slideIn 0.3s ease-out;
     }
+
     .toast-notification.error {
       border-left-color: #dc3545;
     }
+
     @keyframes slideIn {
       from {
         transform: translateX(400px);
         opacity: 0;
       }
+
       to {
         transform: translateX(0);
         opacity: 1;
       }
     }
+
     .empty-state {
       text-align: center;
       padding: 40px 20px;
       color: #999;
     }
+
     .empty-state i {
       font-size: 3rem;
       margin-bottom: 15px;
       opacity: 0.5;
     }
+
     .row-number {
       display: inline-block;
       background: #667eea;
@@ -194,6 +361,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="container-fluid">
     <!-- Header -->
@@ -208,11 +376,20 @@
       <div class="row">
         <div class="col-md-6 mb-3">
           <label for="apiUrl" class="form-label">API URL</label>
-          <input type="text" id="apiUrl" class="form-control" placeholder="https://cms.localllm.me/api/management/lexcentra/chat" value="https://cms.localllm.me/api/management/lexcentra/chat">
+          <input type="text" id="apiUrl" class="form-control"
+            placeholder="https://cms.localllm.me/api/management/lexcentra/chat"
+            value="https://cms.localllm.me/api/management/lexcentra/chat">
         </div>
         <div class="col-md-6 mb-3">
-          <label for="authToken" class="form-label">Authorization Token</label>
-          <input type="password" id="authToken" class="form-control" placeholder="Bearer ...">
+          <label for="authToken" class="form-label">Authorization Token
+          </label>
+          <div class="input-group">
+            <input type="password" id="authToken" class="form-control" placeholder="Bearer ...">
+            <button id="btnSaveToken" class="btn btn-primary" type="button">
+              <i class="bi bi-floppy"></i>
+              Save Token
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -220,14 +397,14 @@
     <!-- Form Section -->
     <div class="form-section">
       <h3 class="mb-3"><i class="bi bi-list-ul"></i> Questions</h3>
-      
+
       <div id="questionsContainer">
         <!-- Questions will be rendered here -->
       </div>
 
       <!-- Action Buttons -->
       <div class="action-buttons">
-        <button id="btnAddRow" class="btn btn-primary" title="Add a new question row">
+        <button id="btnImportExcel" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importExcelModal">
           <i class="bi bi-plus-circle"></i> Add Question
         </button>
         <button id="btnBatchAsk" class="btn btn-batch" title="Ask all questions at once">
@@ -237,6 +414,12 @@
         <button id="btnSave" class="btn btn-save" title="Save all questions and responses to localStorage">
           <i class="bi bi-cloud-check"></i> Save
         </button>
+        <button id="btnClearAll" class="btn btn-danger">
+          <i class="bi bi-trash3"></i> Clear Questions
+        </button>
+        <button id="btnClearResponses" class="btn btn-warning">
+          <i class="bi bi-x-circle"></i> Clear Responses
+        </button>
         <button id="btnDownload" class="btn btn-download" title="Download as question.json">
           <i class="bi bi-download"></i> Download
         </button>
@@ -244,10 +427,49 @@
     </div>
   </div>
 
+  <div class="modal fade" id="importExcelModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            Import Questions từ Excel
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal">
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <p class="text-muted">
+            Copy nguyên cột Question từ Excel rồi paste vào đây.
+          </p>
+          <textarea id="bulkImportArea" class="form-control" rows="12"
+            placeholder="Paste dữ liệu Excel tại đây..."></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Đóng
+          </button>
+          <button id="btnDoImport" type="button" class="btn btn-primary">
+            <i class="bi bi-download"></i>
+            Import
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Bootstrap JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-  
+  <!-- Marked.js for Markdown rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- DOMPurify for sanitizing HTML -->
+  <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+
   <!-- Main App JS -->
   <script src="/js/app.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/question.js"></script>
 </body>
+
 </html>
